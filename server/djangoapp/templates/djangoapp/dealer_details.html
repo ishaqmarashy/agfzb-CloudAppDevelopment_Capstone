@@ -2,17 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>Dealer Details  - Best Cars Dealership</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-
     <body>
-
     <!--Add a nav bar here -->
+    {% include 'partials/nav.html' %}
 
     <!-- Add reviews as cards -->
-
+    <div class="container">
+        <h1>Dealerships</h1>
+        <div class="row">
+          {% for dealership in dealerships %}
+            <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ dealership.full_name }}</h5>
+                  <p class="card-text">{{ dealership.address }}<br>{{ dealership.city }}, {{ dealership.state }} {{ dealership.zip }}</p>
+                  <a href="#" class="btn btn-primary">View Details</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% include 'partials/footer.html' %}
     </body>
-
 </html>

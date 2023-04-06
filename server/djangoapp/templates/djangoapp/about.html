@@ -2,17 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dealership Review</title>
+    <title>About Us - Best Cars Dealership</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
     <body>
-    About Us Page
     <!--Add a nav bar here -->
-
+    {% include 'partials/nav.html' %}
     <!-- Add reviews as cards -->
+  	<header>
+		<h1>Welcome to Best Cars Dealership</h1>
+		<nav>
+			<ul>
+				<li><a href="#about">About</a></li>
+				<li><a href="#inventory">Inventory</a></li>
+				<li><a href="#services">Services</a></li>
+			</ul>
+		</nav>
+	</header>
 
+	<section id="about">
+		<h2>About Our Dealership</h2>
+		<p>Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at reasonable prices. Our knowledgeable and friendly staff is always available to answer your questions and help you find the car of your dreams. We believe that buying a car should be a fun and enjoyable experience, and we do everything we can to make that happen.</p>
+		<p>Our dealership is located in the heart of North America, making it easy to access for customers from all over the continent. We are open seven days a week, so you can visit us whenever it is convenient for you. We have a spacious and modern showroom that is designed to showcase our cars in the best possible light. We also have a comfortable waiting area where you can relax while we take care of your paperwork.</p>
+	</section>
+
+	<section id="inventory">
+		<h2>Our Inventory</h2>
+		<p>At Best Cars, we have a vast inventory of vehicles to choose from. Whether you are looking for a new or used car, we have something for everyone. We sell both domestic and imported cars, including popular brands like Honda, Toyota, Ford, and Chevrolet. We also offer luxury cars from brands like BMW, Mercedes-Benz, and Audi.</p>
+		<p>We have cars in every price range, so you can find something that fits your budget. We believe that everyone deserves to own a high-quality vehicle, regardless of their financial situation. That's why we offer financing options to help you get the car you want at a price you can afford.</p>
+	</section>
+
+	<section id="services">
+		<h2>Our Services</h2>
+		<p>At Best Cars, we offer a range of services to help you maintain your vehicle and keep it running smoothly. Our service department is staffed by highly trained technicians who have years of experience working on all kinds of cars. They use the latest diagnostic equipment and tools to diagnose and fix any problems with your vehicle.</p>
+		<p>We also offer regular maintenance services like oil changes, tire rotations, and brake inspections. These services are essential to keeping your car in good condition and preventing costly repairs down the road. We use high-quality parts and products to ensure that your car stays in top shape for years to come.</p>
+		<p>In addition to our service department, we also have a parts department where you can find genuine parts and accessories for your car. We carry parts for all makes and models, and our knowledgeable staff can help you find exactly what you need. We also offer installation services for any parts or accessories you purchase from us.</p>
+	</section>
+
+	{% include 'partials/footer.html' %}
     </body>
-
 </html>
