@@ -10,19 +10,24 @@ urlpatterns = [
     # name the URL
 
     # path for about view
+    path(route='about', view=views.about, name='about'),
 
     # path for contact us view
+    path(route='contact', view=views.contact, name='contact'),
 
     # path for registration
+    path(route='registration', view=views.registration_request, name='registration'),
 
     # path for login
+    path(route='login', view=views.login, name='login'),
 
     # path for logout
-
     path(route='', view=views.get_dealerships, name='index'),
 
     # path for dealer reviews view
+    path(route='dealer', view=views.get_dealerships, name='dealer'),
 
     # path for add a review view
+    path(route='review', view=views.add_review, name='review'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

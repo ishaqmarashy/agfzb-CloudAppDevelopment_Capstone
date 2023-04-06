@@ -7,5 +7,13 @@
 </head>
     <body>
     <!--Add a registration form here -->
+    <form class="form-inline" action="{% url 'djangoapp:registration'%}" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Username" name="username" required>
+            <input type="password" class="form-control" placeholder="Password" name="psw" required>
+            <input type="password" class="form-control" placeholder="Confirm Password" name="cpsw" required>
+            <button class="btn btn-primary" type="submit">Register </button>
     </body>
+    <script src=""{% static '/js/registration.js' %}"></script>
 </html>
