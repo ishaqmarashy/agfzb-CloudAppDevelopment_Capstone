@@ -9,15 +9,35 @@
     <body>
     {% include 'partials/nav.html' %}
     <!--Add a registration form here -->
-    <form class="form-inline" name="registration" action="{% url 'djangoapp:registration'%}" method="post">
+    <h2>Sign Up</h2>
+    <br>
+    <form  name="registration" action="{% url 'djangoapp:registration' %}" method="post">
         {% csrf_token %}
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Username" name="user"  required>
+            <label for="user">Username</label>
+            <input type="text" class="form-control" placeholder="Username" name="user" id='user' required>
+        </div><div class="input-group">
+            <label for="firstname">First name</label>
+            <input type="text" class="form-control" placeholder="First name" name="firstname" id='firstname'>
+        </div><div class="input-group">
+            <label for="lastname">Last name</label>
+            <input type="text" class="form-control" placeholder="Last name" name="lastname" id='lastname'>
+        </div><div class="input-group">
+            <label for="pwd">Password</label>
             <input type="password" class="form-control" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="psw" id="psw" required>
+        </div><div class="input-group">
+            <label for="cpwd">Confirm Password</label>
             <input type="password" class="form-control" placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="cpsw" id="cpsw" required>
+        </div>            
             <button class="btn btn-primary" type="submit">Register </button>
         </div>
     </form>
+    
+    {% if request.GET.success == 'True' %}
+    User is successfuly registered.
+    {% elif request.GET.success == 'False'%}
+    User with this username already exists.
+    {% endif %}
     <div> 
         <p id="password"></p>
         <h5>Password must contain the following:</h5>
