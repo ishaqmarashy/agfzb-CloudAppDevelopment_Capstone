@@ -3,6 +3,7 @@ from cloudant.error import CloudantException
 from cloudant.result import Result, ResultByKey
 import requests, sys
 
+# Connects to the cloudant instance and runs the appropriate function related to the request
 def main(dict):
     try:
         client = Cloudant.iam(
@@ -26,6 +27,7 @@ def main(dict):
         print("connection error")
         return {"error": err}
     
+# Extracts the selector parameters
 def make_selector(dict):
     selector={}
     if dict:
@@ -37,19 +39,22 @@ def make_selector(dict):
                     selector[key]=value
     return selector
 
+# Checks for a review and validates its formatting
 def valid_review(review):
-    required_keys = ["name", "dealership", "review", "purchase", "purchase_date", "car_make", "car_model", "car_year"]
+    required_keys = ["id","name", "dealership", "review", "purchase", "purchase_date", "car_make", "car_model", "car_year"]
     for key in required_keys:
         if key not in review["review"]:
             return False
     return True
 
+# Gets all the records in the database
 def get_all_records(mydatabase):
     results = []
     for document in mydatabase:
         results.append(document)
     return {"result":results}
 
+#  Gets all the records in the database matching the selector query
 def get_matching_records(mydatabase,selector):
     res=mydatabase.get_query_result(selector)
     results = []
@@ -57,10 +62,12 @@ def get_matching_records(mydatabase,selector):
         results.append(document)
     return {"result":results}
 
+#  inserts a record in the database using parameters given through the post request
 def push_record(mydatabase, review):
     res=mydatabase.create_document(review)
     return {"result": res.exists()}
 
+# Made these variables for testing purposes 
 review={
         "id": 1114,
         "name": "Upkar Lidder",

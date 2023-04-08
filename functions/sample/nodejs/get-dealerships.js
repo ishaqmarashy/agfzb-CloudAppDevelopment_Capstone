@@ -1,6 +1,7 @@
 const { CloudantV1 } = require('@ibm-cloud/cloudant');
 const { IamAuthenticator } = require('ibm-cloud-sdk-core');
 
+// Connects to the cloudant instance and runs the appropriate function related to the request
 async function main(params) {
   const dbname = 'dealerships';
   const authenticator = new IamAuthenticator({ apikey: params.IAM_API_KEY })
@@ -17,6 +18,7 @@ async function main(params) {
   }
 }
 
+// Extracts the selector parameters
 function makeSelector(params){
     const selector={}
     if(params){
@@ -29,6 +31,7 @@ function makeSelector(params){
     return selector;
 }
 
+// Gets all the records in the database
 async function getAllRecords(cloudant,dbname){
     try {
         const result = await cloudant.postAllDocs({ db: dbname, includeDocs: true, limit: 2 });
@@ -41,6 +44,7 @@ async function getAllRecords(cloudant,dbname){
       }
 }
 
+// Gets all the records in the database matching the selector query
 async function getMatchingRecords(cloudant,dbname, selector) {
     try{
         const result = await cloudant.postFind({db:dbname,selector:selector})
@@ -52,7 +56,8 @@ async function getMatchingRecords(cloudant,dbname, selector) {
     return err;
   }
  }
-
+ 
+//  Made these variables for testing purposes 
 const params = {
   "IAM_API_KEY": "s9C8uG0zYUsRweN1laUVgoZgB2lWrTdGAdd3gBt3rPHS",
   "COUCH_USERNAME":"7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix",
