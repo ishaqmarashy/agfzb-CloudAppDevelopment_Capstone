@@ -11,6 +11,28 @@ class CarMake(models.Model):
     
     def __str__(self):
         return f"Name: {self.name}, Description: {self.description}"
+    
+class CarModel(models.Model):
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    dealer_id=models.IntegerField()
+    name = models.CharField(max_length=30)
+    SEDAN = 'Sedan'
+    SUV = 'SUV'
+    WAGON = 'Wagon'
+    TYPE_CHOICES = [
+        (SEDAN, 'Sedan'),
+        (SUV, 'SUV'),
+        (WAGON, 'Wagon'),
+    ]
+    type = models.CharField(
+        null=False,
+        max_length=10,
+        choices=TYPE_CHOICES,
+        default=SEDAN
+    )
+    year = models.DateField()
+    def __str__(self):
+        return f"Car Make: {self.car_make}, Name: {self.name}, Type: {self.type}, Year: {self.year}"
 
 class CarDealer(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -27,29 +49,6 @@ class CarDealer(models.Model):
     def __str__(self):
         return f"ID: {self.id}, Name: {self.city}, State: {self.state}, Street: {self.st}, Address: {self.address}, ZIP: {self.zip}, Lat: {self.lat}, Long: {self.long}, Short Name: {self.short_name}, Full Name: {self.full_name}"
 
-class CarModel(models.Model):
-    id =  models.AutoField(primary_key=True)
-    year = models.DateField()
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    name = models.CharField(max_length=30)
-    dealerid=models.ForeignKey(CarDealer, on_delete=models.CASCADE)
-    SEDAN = 'Sedan'
-    SUV = 'SUV'
-    WAGON = 'Wagon'
-    TYPE_CHOICES = [
-        (SEDAN, 'Sedan'),
-        (SUV, 'SUV'),
-        (WAGON, 'Wagon'),
-    ]
-    type = models.CharField(
-        null=False,
-        max_length=10,
-        choices=TYPE_CHOICES,
-        default=SEDAN
-    )
-    
-    def __str__(self):
-        return f"Car Make: {self.car_make}, Name: {self.name}, Type: {self.type}, Year: {self.year}"
 
 
 class DealerReview(models.Model):
