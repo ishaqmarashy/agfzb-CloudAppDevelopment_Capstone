@@ -4,7 +4,6 @@ from django.conf import settings
 
 
 # Create your models here.
-
 class CarMake(models.Model):
     name = models.CharField(primary_key=True, max_length=30)
     description = models.CharField(max_length=500)
@@ -34,34 +33,42 @@ class CarModel(models.Model):
     def __str__(self):
         return f"Car Make: {self.car_make}, Name: {self.name}, Type: {self.type}, Year: {self.year}"
 
-class CarDealer(models.Model):
-    id = models.IntegerField(primary_key=True)
-    city = models.CharField(max_length=50,blank=True)
-    state = models.CharField(max_length=50,blank=True)
-    st = models.CharField(max_length=50,blank=True)
-    address = models.CharField(max_length=50,blank=True)
-    zip = models.IntegerField(blank=True)
-    lat = models.FloatField(blank=True)
-    long = models.FloatField(blank=True)
-    short_name = models.CharField(max_length=50,blank=True)
-    full_name = models.CharField(max_length=100)
-    
+class CarDealer:
+    def __init__(self, address, city, full_name, id, lat, long, short_name, st, state, zip):
+        # Dealer address
+        self.address = address
+        # Dealer city
+        self.city = city
+        # Dealer Full Name
+        self.full_name = full_name
+        # Dealer id
+        self.id = id
+        # Location lat
+        self.lat = lat
+        # Location long
+        self.long = long
+        # Dealer short name
+        self.short_name = short_name
+        # Dealer state
+        self.st = st
+        self.state = state
+        # Dealer zip
+        self.zip = zip
+        
     def __str__(self):
-        return f"ID: {self.id}, Name: {self.city}, State: {self.state}, Street: {self.st}, Address: {self.address}, ZIP: {self.zip}, Lat: {self.lat}, Long: {self.long}, Short Name: {self.short_name}, Full Name: {self.full_name}"
-
-
-
-class DealerReview(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, on_delete=models.SET_NULL)
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    dealership = models.ForeignKey(CarDealer, on_delete=models.CASCADE)
-    review = models.CharField(max_length=500)
-    publish = models.DateField(auto_now_add=True)
-    purchase = models.BooleanField(default=False)
-    purchase_date = models.DateField(default=now)
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
-    car_model = models.ForeignKey(CarModel, on_delete=models.CASCADE)
+        return f"address: {self.address}, city: {self.city}, full_name: {self.full_name}, id: {self.id}, lat: {self.lat}, long: {self.long}, short_name: {self.short_name}, st: {self.st}, state: {self.state}, zip: {self.zip}"
     
+class DealerReview :
+    def __init__(self, dealership, name, purchase, review, purchase_date, car_make, car_model, car_year,sentiment, id):
+        self.dealership=dealership
+        self.name=name
+        self.purchase=purchase
+        self.review=review
+        self.purchase_date=purchase_date
+        self.car_make=car_make
+        self.car_model=car_model
+        self.car_year=car_year
+        self.sentiment=sentiment 
+        self.id=models.AutoField(primary_key=True)
     def __str__(self):
-        return f"ID: {self.id}, Name: {self.name}, Dealership: {self.dealership}, Review: {self.review}, Purchase: {self.purchase}, Purchase Date: {self.purchase_date}, Car Make: {self.car_make}, Car Model: {self.car_model}, Car Year: {self.car_model.year}"
+        return f"dealership: {self.dealership}, name: {self.name}, purchase: {self.purchase}, review: {self.review}, purchase_date: {self.purchase_date}, car_make: {self.car_make}, car_model: {self.car_model}, car_year: {self.car_year}, sentiment: {self.sentiment}, id: {self.id}"

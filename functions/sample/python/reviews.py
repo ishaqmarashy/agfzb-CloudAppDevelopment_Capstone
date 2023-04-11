@@ -1,7 +1,6 @@
 from cloudant.client import Cloudant
 from cloudant.error import CloudantException
-from cloudant.result import Result, ResultByKey
-import requests, sys
+import requests
 
 # Connects to the cloudant instance and runs the appropriate function related to the request
 def main(dict):
@@ -13,46 +12,73 @@ def main(dict):
         )
         databaseName = "reviews"
         mydatabase = client.create_database(databaseName)
-        selector=make_selector(dict)
-        if valid_review:
-            return push_record(mydatabase,review)
-        if len(selector)>0:
-            return get_matching_records(mydatabase,selector)
+        if 'review' in dict:
+            res=push_record(mydatabase,dict['review'])
+            if res:
+                code=200
+            else:
+                code=500
+            return {
+            'statusCode': code,
+            'headers': { "Content-Type": "application/json" },
+            'body': res,
+            }
         else:
-            return get_all_records(mydatabase)
+            selector=make_selector(dict)
+            if len(selector)>0:
+                res = get_matching_records(mydatabase,selector)
+            else:
+                res = get_all_records(mydatabase)
+            if len(res)>0:
+                code=200
+            else:
+                code=404
+            return {
+                'statusCode': code,
+                'headers': { "Content-Type": "application/json" },
+                'body': res,
+            }
     except CloudantException as cloudant_exception:
         print("unable to connect")
         return {"error": cloudant_exception}
     except (requests.exceptions.RequestException, ConnectionResetError) as err:
         print("connection error")
         return {"error": err}
+
+def convert_to_number(input_string):
+    try:
+        parsed_int = int(input_string)
+        if str(parsed_int) == input_string:
+            return parsed_int
+    except ValueError:
+        pass
     
+    try:
+        parsed_float = float(input_string)
+        if str(parsed_float) == input_string:
+            return parsed_float
+    except ValueError:
+        pass
+    
+    return input_string
+
 # Extracts the selector parameters
 def make_selector(dict):
     selector={}
+    exlusions=['IAM_API_KEY','COUCH_URL','COUCH_USERNAME','__ow_headers','__ow_method','__ow_path']
     if dict:
         for key, value in dict.items(): 
-            if key!='IAM_API_KEY' and key!='COUCH_URL' and key!='COUCH_USERNAME':
-                if key=='dealerId':
-                    selector['dealership']=value
-                else:
-                    selector[key]=value
+            if key not in exlusions:
+                selector[key]=convert_to_number(value)
     return selector
 
-# Checks for a review and validates its formatting
-def valid_review(review):
-    required_keys = ["id","name", "dealership", "review", "purchase", "purchase_date", "car_make", "car_model", "car_year"]
-    for key in required_keys:
-        if key not in review["review"]:
-            return False
-    return True
 
 # Gets all the records in the database
 def get_all_records(mydatabase):
     results = []
     for document in mydatabase:
         results.append(document)
-    return {"result":results}
+    return results
 
 #  Gets all the records in the database matching the selector query
 def get_matching_records(mydatabase,selector):
@@ -60,19 +86,19 @@ def get_matching_records(mydatabase,selector):
     results = []
     for document in res:
         results.append(document)
-    return {"result":results}
+    return results
 
 #  inserts a record in the database using parameters given through the post request
 def push_record(mydatabase, review):
     res=mydatabase.create_document(review)
-    return {"result": res.exists()}
+    return  res.exists()
 
 # Made these variables for testing purposes 
 review={
-        "id": 1114,
+        "id": 1,
         "name": "Upkar Lidder",
         "dealership": 15,
-        "review": "Great service!",
+        "review": "Great service!!",
         "purchase": False,
         "another": "field",
         "purchase_date": "02/16/2021",
@@ -83,7 +109,6 @@ review={
 dict = {
   "IAM_API_KEY": "s9C8uG0zYUsRweN1laUVgoZgB2lWrTdGAdd3gBt3rPHS",
   "COUCH_USERNAME":"7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix",
-  "COUCH_URL": "https://7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix.cloudantnosqldb.appdomain.cloud",
-  "dealerId": 15,
-  "review":review
+  "COUCH_URL": "https://7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix.cloudantnosqldb.appdomain.cloud",       
 }
+print (main(dict))

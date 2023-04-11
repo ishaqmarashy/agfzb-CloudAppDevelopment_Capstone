@@ -6,16 +6,15 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-    <body>
+<body>
     <!--Add a nav bar here -->
     {% include 'partials/nav.html' %}
-    <!-- Add reviews as cards -->
-    <section>
+    <section class="container py-5 text-center">
         <h2>Contact Information</h2>
         <p>You can also reach us by phone or email:</p>
-        <ul>
-            <li>Phone: 555-555-5555</li>
-            <li>Email: info@bestcars.com</li>
+        <ul class="list-unstyled">
+            <li><a href="tel:555-555-5555" >Phone: 555-555-5555</a></li>
+            <li><a href="mailto:info@bestcars.com" >Email: info@bestcars.com</a></li>
         </ul>
         <p>Our dealership is located at:</p>
         <address>
@@ -24,12 +23,12 @@
             Anytown, USA 12345
         </address>
         <p>We are open seven days a week:</p>
-        <ul>
+        <ul class="list-unstyled">
             <li>Monday - Friday: 9am - 7pm</li>
             <li>Saturday: 10am - 5pm</li>
             <li>Sunday: 12pm - 4pm</li>
         </ul>
     </section>
-    </body>
     {% include 'partials/footer.html' %}
+</body>
 </html>
