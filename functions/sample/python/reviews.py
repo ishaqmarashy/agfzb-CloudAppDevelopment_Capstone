@@ -12,6 +12,9 @@ def main(dict):
         )
         databaseName = "reviews"
         mydatabase = client.create_database(databaseName)
+        if 'dealerId' in dict:
+            dict['dealership']= dict['dealerId']
+            del dict['dealerId']
         if 'review' in dict:
             res=push_record(mydatabase,dict['review'])
             if res:
@@ -71,7 +74,6 @@ def make_selector(dict):
             if key not in exlusions:
                 selector[key]=convert_to_number(value)
     return selector
-
 
 # Gets all the records in the database
 def get_all_records(mydatabase):

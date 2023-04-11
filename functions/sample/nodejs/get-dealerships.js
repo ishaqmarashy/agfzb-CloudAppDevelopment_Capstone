@@ -7,6 +7,10 @@ function main(params) {
     const dbname = 'dealerships';
     const authenticator = new IamAuthenticator({ apikey: params.IAM_API_KEY })
     const cloudant = CloudantV1.newInstance({ authenticator: authenticator });
+    if ('dealer_id' in params){
+            params['id'] = params['dealer_id']
+            delete params['dealer_id']
+          }
     cloudant.setServiceUrl(params.COUCH_URL);
     const selector=makeSelector(params)
     const results =Object.keys(selector).length>0?getMatchingRecords(cloudant,dbname,selector):getAllRecords(cloudant,dbname)
@@ -85,7 +89,7 @@ const params = {
   "IAM_API_KEY": "s9C8uG0zYUsRweN1laUVgoZgB2lWrTdGAdd3gBt3rPHS",
   "COUCH_USERNAME":"7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix",
   "COUCH_URL": "https://7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix.cloudantnosqldb.appdomain.cloud",
-  "long": -106.3,
+  'dealerId':13,
 };
 
 main(params).then((dealers) => console.log(dealers));
