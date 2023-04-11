@@ -96,9 +96,9 @@ def get_dealer_by_id_from_cf(url, dealerId):
 # - Parse JSON results into a DealerView object list
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 def analyze_review_sentiments(dealerreview):
-    url='https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/37e3838b-34f1-4334-b16a-03a5984e9481'
+    url=''
     version='2022-04-07'
-    api_key='qKai6-i2iW26IMj75ozoNYp4WElFupsybsDix_MCfEQd'
+    api_key=''
     authenticator = IAMAuthenticator(api_key) 
     natural_language_understanding = NaturalLanguageUnderstandingV1(
     version=version,
