@@ -86,9 +86,9 @@ async function getMatchingRecords(cloudant,dbname, selector) {
  
 //  Made these variables for testing purposes 
 const params = {
-  "IAM_API_KEY": "s9C8uG0zYUsRweN1laUVgoZgB2lWrTdGAdd3gBt3rPHS",
-  "COUCH_USERNAME":"7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix",
-  "COUCH_URL": "https://7ecbbb4a-e98c-4727-9e2a-7385639134c0-bluemix.cloudantnosqldb.appdomain.cloud",
+  "IAM_API_KEY": "",
+  "COUCH_USERNAME":"",
+  "COUCH_URL": "",
   'dealerId':13,
 };
 
